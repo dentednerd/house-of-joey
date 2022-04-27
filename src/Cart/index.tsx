@@ -1,10 +1,10 @@
-import CartItem from '../CartItem/CartItem';
+import CartItem from '../CartItem';
 
 // Styles
 import { Wrapper } from './Cart.styles';
 
 // Types
-import { CartItemType } from '../App';
+import { CartItemType } from '../types';
 
 type Props = {
   cartItems: CartItemType[];

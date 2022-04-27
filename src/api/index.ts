@@ -1,6 +1,28 @@
-import { CartItemType } from '../App';
+import axios from 'axios';
+import { useQuery } from 'react-query';
+import { CartItemType } from '../types';
 
-export const getProducts = async (): Promise<CartItemType[]> =>
-await (await fetch('https://fakestoreapi.com/products')).json();
+const api = axios.create({
+  baseURL: "https://fakestoreapi.com",
+  headers: {
+    "Content-Type": "application/json"
+  }
+})
 
-export const getCategories = async (): Promise<string[]> => await (await fetch('https://fakestoreapi.com/products/categories')).json();
+export const useProducts = (category: string) => useQuery(
+  ["products", category],
+  async (): Promise<CartItemType[]> => {
+    let queryString = '/products';
+    if (category) queryString = `/products/category/${category}`;
+    const { data } = await api.get(queryString);
+    return data;
+  }
+);
+
+export const useCategories = () => useQuery(
+  "categories",
+  async (): Promise<string[]> => {
+    const { data } = await api.get('/products/categories');
+    return data;
+  }
+);

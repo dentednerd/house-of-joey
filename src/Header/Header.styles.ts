@@ -9,4 +9,9 @@ export const StyledHeader = styled.header`
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
 `;

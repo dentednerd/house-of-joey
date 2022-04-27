@@ -1,38 +1,22 @@
 import { useState } from 'react';
-import { useQuery } from 'react-query';
+import { Routes, Route } from 'react-router-dom';
 
 // Components
-import Item from './Item/Item';
-import Cart from './Cart/Cart';
+import Products from './Products';
+import Cart from './Cart';
 import Header from './Header';
-import {
-  Drawer,
-  LinearProgress,
-  Grid
-} from '@mui/material';
-
-// API
-import { getProducts } from './api';
+import { Drawer } from '@mui/material';
 
 // Styles
 import { Wrapper } from './App.styles';
 
 // Types
-export type CartItemType = {
-  id: number,
-  category: string,
-  description: string,
-  image: string,
-  price: number,
-  title: string,
-  amount: number,
-}
+import { CartItemType } from './types';
 
 const App = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
 
-  const { data, isLoading, error } = useQuery<CartItemType[]>('products', getProducts);
 
   const getTotalItems = (items: CartItemType[]) =>
     items.reduce((acc: number, item) => acc + item.amount, 0);
@@ -65,13 +49,11 @@ const App = () => {
     ))
   };
 
-  if (isLoading) return <LinearProgress />;
-  if (error) return <div>Something went wrong...</div>;
-
   return (
     <Wrapper>
       <Header
-        setIsCartOpen={setIsCartOpen} getTotalItems={getTotalItems}
+        setIsCartOpen={setIsCartOpen}
+        getTotalItems={getTotalItems}
         cartItems={cartItems}
       />
       <Drawer anchor="right" open={isCartOpen} onClose={() => setIsCartOpen(false)}>
@@ -83,13 +65,10 @@ const App = () => {
       </Drawer>
 
       <main>
-        <Grid container spacing={3}>
-          {data?.map((item) => (
-            <Grid item key={item.id} xs={12} sm={4}>
-              <Item item={item} handleAddToCart={handleAddToCart} />
-            </Grid>
-          ))}
-        </Grid>
+        <Routes>
+          <Route path="/" element={<Products  handleAddToCart={handleAddToCart} />} />
+          <Route path="/:category" element={< Products handleAddToCart={handleAddToCart} />} />
+        </Routes>
       </main>
     </Wrapper>
   );

@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import './index.css';
@@ -11,6 +12,8 @@ const client = new QueryClient();
 
 root.render(
   <QueryClientProvider client={client}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </QueryClientProvider>
 );
