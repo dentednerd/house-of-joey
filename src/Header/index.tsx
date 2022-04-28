@@ -1,26 +1,11 @@
 import { Link } from 'react-router-dom';
-
-// Components
 import { IconButton, Badge } from '@mui/material';
 import { AddShoppingCart } from '@mui/icons-material';
-
-// Styles
 import { StyledHeader } from './Header.styles';
-
-// Types
-import { CartItemType } from '../types';
-
-// API
-
+import { HeaderProps } from '../types';
 import { useCategories } from '../api';
 
-type Props = {
-  setIsCartOpen: (isCartOpen: boolean) => void;
-  getTotalItems: (items: CartItemType[]) => number;
-  cartItems: CartItemType[]
-}
-
-const Header: React.FC<Props> = ({ setIsCartOpen, getTotalItems, cartItems }) => {
+const Header: React.FC<HeaderProps> = ({ setIsCartOpen, getTotalItems, cartItems }) => {
   const { data } = useCategories();
 
   return (

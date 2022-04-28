@@ -21,7 +21,7 @@ const App = () => {
   const getTotalItems = (items: CartItemType[]) =>
     items.reduce((acc: number, item) => acc + item.amount, 0);
 
-  const handleAddToCart = (clickedItem: CartItemType) => {
+  const addToCart = (clickedItem: CartItemType) => {
     setCartItems((prev) => {
       const isItemInCart = prev.find(item => item.id === clickedItem.id);
       if (isItemInCart) {
@@ -59,15 +59,15 @@ const App = () => {
       <Drawer anchor="right" open={isCartOpen} onClose={() => setIsCartOpen(false)}>
         <Cart
           cartItems={cartItems}
-          addToCart={handleAddToCart}
+          addToCart={addToCart}
           removeFromCart={handleRemoveFromCart}
         />
       </Drawer>
 
       <main>
         <Routes>
-          <Route path="/" element={<Products  handleAddToCart={handleAddToCart} />} />
-          <Route path="/:category" element={< Products handleAddToCart={handleAddToCart} />} />
+          <Route path="/" element={<Products  addToCart={addToCart} />} />
+          <Route path="/:category" element={< Products addToCart={addToCart} />} />
         </Routes>
       </main>
     </Wrapper>
